@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CentralRModelStoreContainer" CdmEntityContainer="CentralREntities">
+    <EntitySetMapping Name="Cliente">
+      <EntityTypeMapping TypeName="CentralRModel.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Idade" ColumnName="Idade" />
+          <ScalarProperty Name="TipoIdade" ColumnName="TipoIdade" />
+          <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+          <ScalarProperty Name="CNS" ColumnName="CNS" />
+          <ScalarProperty Name="Familia" ColumnName="Familia" />
+          <ScalarProperty Name="Prontuario" ColumnName="Prontuario" />
+          <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+          <ScalarProperty Name="Situacao" ColumnName="Situacao" />
+          <ScalarProperty Name="ID_Unidade" ColumnName="ID_Unidade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Unidade">
+      <EntityTypeMapping TypeName="CentralRModel.Unidade">
+        <MappingFragment StoreEntitySet="Unidade">
+          <ScalarProperty Name="ID_Unidade" ColumnName="ID_Unidade" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_InsertCliente" FunctionName="CentralRModel.Store.SP_InsertCliente" />
+    <FunctionImportMapping FunctionImportName="SP_InsertUnidade" FunctionName="CentralRModel.Store.SP_InsertUnidade" />
+  </EntityContainerMapping>
+</Mapping>
