@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CentralRModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="ID_Cliente" />
+    </Key>
+    <Property Name="ID_Cliente" Type="int" Nullable="false" />
+    <Property Name="Nome" Type="nvarchar" MaxLength="100" />
+    <Property Name="Idade" Type="int" />
+    <Property Name="TipoIdade" Type="nvarchar" MaxLength="20" />
+    <Property Name="Sexo" Type="nvarchar" MaxLength="20" />
+    <Property Name="CNS" Type="nvarchar" MaxLength="20" />
+    <Property Name="Familia" Type="nvarchar" MaxLength="20" />
+    <Property Name="Prontuario" Type="nvarchar" MaxLength="20" />
+    <Property Name="Endereco" Type="nvarchar(max)" />
+    <Property Name="Situacao" Type="nvarchar" MaxLength="20" />
+    <Property Name="ID_Unidade" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Unidade">
+    <Key>
+      <PropertyRef Name="ID_Unidade" />
+    </Key>
+    <Property Name="ID_Unidade" Type="int" Nullable="false" />
+    <Property Name="Descricao" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK__Cliente__ID_Unid__4BAC3F29">
+    <End Role="Unidade" Type="Self.Unidade" Multiplicity="1" />
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unidade">
+        <PropertyRef Name="ID_Unidade" />
+      </Principal>
+      <Dependent Role="Cliente">
+        <PropertyRef Name="ID_Unidade" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SP_InsertCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCliente" Type="int" Mode="In" />
+    <Parameter Name="nome" Type="nvarchar" Mode="In" />
+    <Parameter Name="idade" Type="int" Mode="In" />
+    <Parameter Name="tipoIdade" Type="nvarchar" Mode="In" />
+    <Parameter Name="sexo" Type="nvarchar" Mode="In" />
+    <Parameter Name="cns" Type="nvarchar" Mode="In" />
+    <Parameter Name="familia" Type="nvarchar" Mode="In" />
+    <Parameter Name="prontuario" Type="nvarchar" Mode="In" />
+    <Parameter Name="endereco" Type="nvarchar" Mode="In" />
+    <Parameter Name="situacao" Type="nvarchar" Mode="In" />
+    <Parameter Name="idUnidade" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_InsertUnidade" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUnidade" Type="int" Mode="In" />
+    <Parameter Name="descricao" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="CentralRModel1StoreContainer">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Unidade" EntityType="Self.Unidade" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Cliente__ID_Unid__4BAC3F29" Association="Self.FK__Cliente__ID_Unid__4BAC3F29">
+      <End Role="Unidade" EntitySet="Unidade" />
+      <End Role="Cliente" EntitySet="Cliente" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

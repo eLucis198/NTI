@@ -14,7 +14,7 @@ namespace CentralR.Controllers
     public class ClienteController : Controller
     {
 
-        CentralREntities db = new CentralREntities();
+        CentralREntities2 db = new CentralREntities2();
         // GET: Cliente
         public ActionResult Upload()
         {
