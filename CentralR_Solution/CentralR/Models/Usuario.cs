@@ -21,4 +21,10 @@ namespace CentralR.Models
         public Nullable<bool> Status_ { get; set; }
         public Nullable<bool> Acesso { get; set; }
     }
+
+    public enum Status_
+    {
+        Ativado,
+        Desativado
+    }
 }

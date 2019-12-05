@@ -1,4 +1,5 @@
-﻿@model CentralR.Models.Usuario
+﻿@using CentralR.Models
+@model CentralR.Models.Usuario
 
 @{
     ViewBag.Title = "Editar";
@@ -30,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.Status_)
-                            @Html.TextBoxFor(x => x.Status_, new { @class="form-control" })
+                            @Html.TextBoxFor(x=> x.Status_, new { @class="form-control" })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.Acesso)

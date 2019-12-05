@@ -19,10 +19,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/02/2019 13:39:17</publishTime>
     </File>
     <File Include="bin/CentralR.dll">
-      <publishTime>12/05/2019 16:43:36</publishTime>
+      <publishTime>12/05/2019 17:07:08</publishTime>
     </File>
     <File Include="bin/CentralR.pdb">
-      <publishTime>12/05/2019 16:43:36</publishTime>
+      <publishTime>12/05/2019 17:07:08</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>12/02/2019 13:39:16</publishTime>
@@ -340,7 +340,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2019 16:24:13</publishTime>
     </File>
     <File Include="Views/Usuario/Editar.cshtml">
-      <publishTime>12/05/2019 16:37:18</publishTime>
+      <publishTime>12/05/2019 17:06:37</publishTime>
     </File>
     <File Include="Views/Usuario/Index.cshtml">
       <publishTime>12/05/2019 15:09:59</publishTime>
