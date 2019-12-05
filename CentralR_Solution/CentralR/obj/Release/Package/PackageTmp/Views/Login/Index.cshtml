@@ -1,0 +1,55 @@
+﻿﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    .validation-summary-errors {
+        color: red !important;
+    }
+
+    input[type=text],[type=password]{
+        display: initial !important;
+        width: 256px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-2 col-md-3"></div>
+        <div class="col-xs-12 col-sm-8 col-md-6 text-center" style="border: solid">
+            <form action="~/Login/Index" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group">
+                    <h2><b>Central<span style="background-color:blue; color:white">R</span></b></h2>
+                </div>
+                <div class="form-group">
+                    @Html.ValidationSummary(true)
+                </div>
+                <div class="form-group">
+                    @Html.Label("lblCpf", "CPF")
+                    @Html.TextBox("txtCpf", (string)ViewBag.CPF, new { type = "text", @class = "form-control", autocomplete = "off" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("lblSenha", "Senha")
+                    @Html.TextBox("txtSenha", (string)ViewBag.Senha, new { type = "password", @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @{
+                        if (ViewBag.Lembrar == true)
+                        {
+                            <label>@Html.CheckBox("cbxLembrar", true, new { @class = "form-check-input" }) Lembrar</label>
+                        }
+                        else
+                        {
+                            <label>@Html.CheckBox("cbxLembrar", false, new { @class = "form-check-input" }) Lembrar</label>
+                        }
+                    }
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" id="btnEntrar" name="btnEntrar" value="Entrar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-3"></div>
+    </div>
+</div>

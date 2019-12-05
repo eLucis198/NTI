@@ -1,0 +1,179 @@
+﻿﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+<style>
+    input, select {
+        display: initial !important;
+    }
+
+    input[type=date], [type=time] {
+        width: 160px;
+    }
+    input[type=text]{
+        width: 250px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
+        <div class="col-xs-12 col-sm-10 col-md-10 text-center">
+            <form id="formPesquisar" class="form-horizontal" enctype="multipart/form-data">
+                <div class="form-group">
+                    <h1>AGENDAMENTO DE CONSULTAS</h1>
+                </div>
+                <div class="form-group">
+                    @Html.ValidationSummary(true)
+                </div>
+                <table class="table table-responsive table-bordered">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtNomeCliente">Cliente</label>
+                                <br />
+                                <input type="text" id="txtNomeCliente" name="txtNomeCliente" class="form-control" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtUnidadeCliente">Unidade do Cliente</label>
+                                <br />
+                                <select id="txtUnidadeCliente" name="txtUnidadeCliente" class="form-control" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtDataConsultaFrom">Data da Consulta</label>
+                                <br />
+                                <input type="date" id="txtDataConsultaFrom" name="txtDataConsultaFrom" class="form-control" />
+                                <input type="date" id="txtDataConsultaTo" name="txtDataConsultaTo" class="form-control" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtHoraConsultaFrom">Hora da Consulta</label>
+                                <br />
+                                <input type="time" id="txtHoraConsultaFrom" name="txtHoraConsultaFrom" class="form-control" />
+                                <input type="time" id="txtHoraConsultaTo" name="txtHoraConsultaTo" class="form-control" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtUnidadePrestadora">Unidade Prestadora</label>
+                                <br />
+                                <input type="text" id="txtUnidadePrestadora" name="txtUnidadePrestadora" class="form-control" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtProfissional">Profissional</label>
+                                <br />
+                                <input type="text" id="txtProfissional" name="txtProfissional" class="form-control" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtEspecialidade">Especialidade</label>
+                                <br />
+                                <input type="text" id="txtEspecialidade" name="txtEspecialidade" class="form-control" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="txtDataAgendamentoFrom">Data do Agendamento</label>
+                                <br />
+                                <input type="date" id="txtDataAgendamentoFrom" name="txtDataAgendamentoFrom" class="form-control" />
+                                <input type="date" id="txtDataAgendamentoTo" name="txtDataAgendamentoTo" class="form-control" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <input type="button" id="btnPesquisar" name="btnPesquisar" value="PESQUISAR" onclick="Pesquisar()" class="btn btn-primary" />
+                <input type="button" id="btnDownload" name="btnDownload" value="DOWNLOAD" onclick="Download()" class="btn btn-primary" />
+            </form>
+            <br />
+            <div id="loaderDiv" class="loader" hidden></div>
+            <br />
+            <div align="left" style="font-size:16px" id="numeroDeResultados" hidden></div>
+            <div id="tableSearchResult" hidden></div>
+        </div>
+        <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
+    </div>
+</div>
+
+
+@section _Nav{
+    @Html.Partial("_Nav")
+}
+
+@section scripts{
+    <script>
+
+        function Download() {
+            var form = $('#formPesquisar').serialize();
+            $.ajax({
+                url: '@Url.Action("CreateFile")',
+                type: 'POST',
+                data: form,
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    window.location = '@Url.Action("Download")'+'?fileGuid=' + data.FileGuid + '&fileName=' + data.FileName;
+                },
+                error: function (data) {
+                    alert('Ops! Houve algo de errado.');
+                }
+            });
+        }
+
+        function PesquisarUnidade() {
+            $.ajax({
+                url: '@Url.Action("PesquisarUnidade")',
+                type: 'GET',
+                success: function (data) {
+                    $('#txtUnidadeCliente').html(data.ListaDeUnidades);
+                },
+                error: function (data) {
+                    alert('Ops! Houve algo de errado.');
+                }
+            });
+        }
+
+        function Pesquisar() {
+            $('#loaderDiv').show();
+            $('#tableSearchResult').hide();
+            $('#numeroDeResultados').hide();
+            var form = $('#formPesquisar').serialize();
+            $.ajax({
+                url: '@Url.Action("Pesquisar")',
+                type: 'POST',
+                data: form,
+                success: function (data) {
+                    $('#loaderDiv').hide();
+                    $('#tableSearchResult').show();
+                    $('#numeroDeResultados').show();
+                    $('#tableSearchResult').html(data.ListaDeAgendamentos);
+                    $('#numeroDeResultados').html(data.Resultado);
+                },
+                error: function (data) {
+                    alert('Ops! Houve algo de errado.');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            PesquisarUnidade();
+            Pesquisar();
+        });
+
+
+    </script>
+}

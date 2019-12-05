@@ -4,7 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CentralRModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CentralRModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AgendamentoConsulta">
+          <Key>
+            <PropertyRef Name="ID_AgendamentoConsulta" />
+          </Key>
+          <Property Name="ID_AgendamentoConsulta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataConsulta" Type="date" />
+          <Property Name="HoraConsulta" Type="time" Precision="7" />
+          <Property Name="DataAgendamento" Type="date" />
+          <Property Name="Prontuario" Type="nvarchar" MaxLength="20" />
+          <Property Name="Telefone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Celular" Type="nvarchar" MaxLength="20" />
+          <Property Name="UnidadePrestadora" Type="nvarchar" MaxLength="100" />
+          <Property Name="NomeProfissional" Type="nvarchar" MaxLength="50" />
+          <Property Name="Especialidade" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tipo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Situacao" Type="nvarchar" MaxLength="20" />
+          <Property Name="ID_Cliente" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="ID_Cliente" />
@@ -28,6 +46,54 @@
           <Property Name="ID_Unidade" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CPF" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" />
+          <Property Name="Senha" Type="nvarchar(max)" />
+          <Property Name="Status_" Type="bit" />
+          <Property Name="Acesso" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CentralR.dbo.ViewAgendamentoConsulta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewAgendamentoConsulta">
+          <Key>
+            <PropertyRef Name="ID_AgendamentoConsulta" />
+            <PropertyRef Name="ID_Cliente" />
+            <PropertyRef Name="ID_Unidade" />
+          </Key>
+          <Property Name="ID_AgendamentoConsulta" Type="int" Nullable="false" />
+          <Property Name="DataConsulta" Type="date" />
+          <Property Name="HoraConsulta" Type="time" Precision="7" />
+          <Property Name="DataAgendamento" Type="date" />
+          <Property Name="Prontuario" Type="nvarchar" MaxLength="20" />
+          <Property Name="Telefone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Celular" Type="nvarchar" MaxLength="20" />
+          <Property Name="UnidadePrestadora" Type="nvarchar" MaxLength="100" />
+          <Property Name="NomeProfissional" Type="nvarchar" MaxLength="50" />
+          <Property Name="Especialidade" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tipo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Situacao" Type="nvarchar" MaxLength="20" />
+          <Property Name="ID_Cliente" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="100" />
+          <Property Name="ID_Unidade" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__Agendamen__ID_Cl__72C60C4A">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="AgendamentoConsulta" Type="Self.AgendamentoConsulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID_Cliente" />
+            </Principal>
+            <Dependent Role="AgendamentoConsulta">
+              <PropertyRef Name="ID_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Cliente__ID_Unid__4BAC3F29">
           <End Role="Unidade" Type="Self.Unidade" Multiplicity="1" />
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
@@ -58,15 +124,40 @@
           <Parameter Name="descricao" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="CentralRModel1StoreContainer">
+          <EntitySet Name="AgendamentoConsulta" EntityType="Self.AgendamentoConsulta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unidade" EntityType="Self.Unidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewAgendamentoConsulta" EntityType="Self.ViewAgendamentoConsulta" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewAgendamentoConsulta].[ID_AgendamentoConsulta] AS [ID_AgendamentoConsulta], 
+    [ViewAgendamentoConsulta].[DataConsulta] AS [DataConsulta], 
+    [ViewAgendamentoConsulta].[HoraConsulta] AS [HoraConsulta], 
+    [ViewAgendamentoConsulta].[DataAgendamento] AS [DataAgendamento], 
+    [ViewAgendamentoConsulta].[Prontuario] AS [Prontuario], 
+    [ViewAgendamentoConsulta].[Telefone] AS [Telefone], 
+    [ViewAgendamentoConsulta].[Celular] AS [Celular], 
+    [ViewAgendamentoConsulta].[UnidadePrestadora] AS [UnidadePrestadora], 
+    [ViewAgendamentoConsulta].[NomeProfissional] AS [NomeProfissional], 
+    [ViewAgendamentoConsulta].[Especialidade] AS [Especialidade], 
+    [ViewAgendamentoConsulta].[Tipo] AS [Tipo], 
+    [ViewAgendamentoConsulta].[Situacao] AS [Situacao], 
+    [ViewAgendamentoConsulta].[ID_Cliente] AS [ID_Cliente], 
+    [ViewAgendamentoConsulta].[Nome] AS [Nome], 
+    [ViewAgendamentoConsulta].[ID_Unidade] AS [ID_Unidade], 
+    [ViewAgendamentoConsulta].[Descricao] AS [Descricao]
+    FROM [dbo].[ViewAgendamentoConsulta] AS [ViewAgendamentoConsulta]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Agendamen__ID_Cl__72C60C4A" Association="Self.FK__Agendamen__ID_Cl__72C60C4A">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="AgendamentoConsulta" EntitySet="AgendamentoConsulta" />
+          </AssociationSet>
           <AssociationSet Name="FK__Cliente__ID_Unid__4BAC3F29" Association="Self.FK__Cliente__ID_Unid__4BAC3F29">
             <End Role="Unidade" EntitySet="Unidade" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CentralRModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -86,6 +177,7 @@
           <Property Name="Situacao" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ID_Unidade" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Unidade" Relationship="Self.FK__Cliente__ID_Unid__4BAC3F29" FromRole="Cliente" ToRole="Unidade" />
+          <NavigationProperty Name="AgendamentoConsulta" Relationship="CentralRModel1.FK__Agendamen__ID_Cl__72C60C4A" FromRole="Cliente" ToRole="AgendamentoConsulta" />
         </EntityType>
         <EntityType Name="Unidade">
           <Key>
@@ -131,7 +223,79 @@
             <Parameter Name="idUnidade" Mode="In" Type="Int32" />
             <Parameter Name="descricao" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="AgendamentoConsulta" EntityType="CentralRModel1.AgendamentoConsulta" />
+          <AssociationSet Name="FK__Agendamen__ID_Cl__72C60C4A" Association="CentralRModel1.FK__Agendamen__ID_Cl__72C60C4A">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="AgendamentoConsulta" EntitySet="AgendamentoConsulta" />
+          </AssociationSet>
+          <EntitySet Name="ViewAgendamentoConsulta" EntityType="CentralRModel1.ViewAgendamentoConsulta" />
+          <EntitySet Name="Usuario" EntityType="CentralRModel1.Usuario" />
         </EntityContainer>
+        <EntityType Name="AgendamentoConsulta">
+          <Key>
+            <PropertyRef Name="ID_AgendamentoConsulta" />
+          </Key>
+          <Property Name="ID_AgendamentoConsulta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataConsulta" Type="DateTime" Precision="0" />
+          <Property Name="HoraConsulta" Type="Time" Precision="7" />
+          <Property Name="DataAgendamento" Type="DateTime" Precision="0" />
+          <Property Name="Prontuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UnidadePrestadora" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NomeProfissional" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Especialidade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Situacao" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Cliente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="CentralRModel1.FK__Agendamen__ID_Cl__72C60C4A" FromRole="AgendamentoConsulta" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK__Agendamen__ID_Cl__72C60C4A">
+          <End Type="CentralRModel1.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="CentralRModel1.AgendamentoConsulta" Role="AgendamentoConsulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID_Cliente" />
+            </Principal>
+            <Dependent Role="AgendamentoConsulta">
+              <PropertyRef Name="ID_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ViewAgendamentoConsulta">
+          <Key>
+            <PropertyRef Name="ID_AgendamentoConsulta" />
+            <PropertyRef Name="ID_Cliente" />
+            <PropertyRef Name="ID_Unidade" />
+          </Key>
+          <Property Name="ID_AgendamentoConsulta" Type="Int32" Nullable="false" />
+          <Property Name="DataConsulta" Type="DateTime" Precision="0" />
+          <Property Name="HoraConsulta" Type="Time" Precision="7" />
+          <Property Name="DataAgendamento" Type="DateTime" Precision="0" />
+          <Property Name="Prontuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UnidadePrestadora" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NomeProfissional" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Especialidade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Situacao" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Cliente" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Unidade" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CPF" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Senha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status_" Type="Boolean" />
+          <Property Name="Acesso" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -165,6 +329,59 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertCliente" FunctionName="CentralRModel1.Store.SP_InsertCliente" />
           <FunctionImportMapping FunctionImportName="SP_InsertUnidade" FunctionName="CentralRModel1.Store.SP_InsertUnidade" />
+          <EntitySetMapping Name="AgendamentoConsulta">
+            <EntityTypeMapping TypeName="CentralRModel1.AgendamentoConsulta">
+              <MappingFragment StoreEntitySet="AgendamentoConsulta">
+                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+                <ScalarProperty Name="Situacao" ColumnName="Situacao" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Especialidade" ColumnName="Especialidade" />
+                <ScalarProperty Name="NomeProfissional" ColumnName="NomeProfissional" />
+                <ScalarProperty Name="UnidadePrestadora" ColumnName="UnidadePrestadora" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Prontuario" ColumnName="Prontuario" />
+                <ScalarProperty Name="DataAgendamento" ColumnName="DataAgendamento" />
+                <ScalarProperty Name="HoraConsulta" ColumnName="HoraConsulta" />
+                <ScalarProperty Name="DataConsulta" ColumnName="DataConsulta" />
+                <ScalarProperty Name="ID_AgendamentoConsulta" ColumnName="ID_AgendamentoConsulta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewAgendamentoConsulta">
+            <EntityTypeMapping TypeName="CentralRModel1.ViewAgendamentoConsulta">
+              <MappingFragment StoreEntitySet="ViewAgendamentoConsulta">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="ID_Unidade" ColumnName="ID_Unidade" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+                <ScalarProperty Name="Situacao" ColumnName="Situacao" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Especialidade" ColumnName="Especialidade" />
+                <ScalarProperty Name="NomeProfissional" ColumnName="NomeProfissional" />
+                <ScalarProperty Name="UnidadePrestadora" ColumnName="UnidadePrestadora" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Prontuario" ColumnName="Prontuario" />
+                <ScalarProperty Name="DataAgendamento" ColumnName="DataAgendamento" />
+                <ScalarProperty Name="HoraConsulta" ColumnName="HoraConsulta" />
+                <ScalarProperty Name="DataConsulta" ColumnName="DataConsulta" />
+                <ScalarProperty Name="ID_AgendamentoConsulta" ColumnName="ID_AgendamentoConsulta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="CentralRModel1.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Acesso" ColumnName="Acesso" />
+                <ScalarProperty Name="Status_" ColumnName="Status_" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="CPF" ColumnName="CPF" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

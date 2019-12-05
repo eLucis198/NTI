@@ -14,6 +14,12 @@ namespace CentralR.Models
     
     public partial class Cliente
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cliente()
+        {
+            this.AgendamentoConsulta = new HashSet<AgendamentoConsulta>();
+        }
+    
         public int ID_Cliente { get; set; }
         public string Nome { get; set; }
         public Nullable<int> Idade { get; set; }
@@ -27,5 +33,7 @@ namespace CentralR.Models
         public int ID_Unidade { get; set; }
     
         public virtual Unidade Unidade { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AgendamentoConsulta> AgendamentoConsulta { get; set; }
     }
 }

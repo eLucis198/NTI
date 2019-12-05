@@ -29,6 +29,9 @@ namespace CentralR.Models
     
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Unidade> Unidade { get; set; }
+        public virtual DbSet<AgendamentoConsulta> AgendamentoConsulta { get; set; }
+        public virtual DbSet<ViewAgendamentoConsulta> ViewAgendamentoConsulta { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual int SP_InsertCliente(Nullable<int> idCliente, string nome, Nullable<int> idade, string tipoIdade, string sexo, string cns, string familia, string prontuario, string endereco, string situacao, Nullable<int> idUnidade)
         {

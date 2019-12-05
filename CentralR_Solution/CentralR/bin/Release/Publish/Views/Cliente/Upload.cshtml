@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Cliente";
+}
+
+<style>
+    input[type="file"],[type="radio"]{
+        display: initial !important;
+    }
+
+    .loader{
+        width: 96px;
+        height: 96px;
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #6464ff;
+        border-bottom: 16px solid #6464ff;
+        border-radius: 50%;
+        margin: 0 auto;
+        -webkit-animation: spin 1s infinite;
+        animation: spin 1s infinite;
+    }
+    @@-webkit-keyframes spin{
+        0% { -webkit-transform: rotate(0deg);}
+        100% { -webkit-transform: rotate(360deg);}
+    }
+    @@keyframes spin{
+        0% {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+    }
+
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-1 col-md-2 col-lg-3 text-center"></div>
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text-center">
+            <form name="formClienteUpload" id="formClienteUpload" enctype="multipart/form-data">
+                <div class="form-group">
+                    <h2>UPLOAD DE CLIENTES</h2>
+                </div>
+                <div class="form-group">
+                    <input type="file" name="fileInput" id="fileInput" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="button" name="btnClienteUpload" id="btnClienteUpload" value="UPLOAD" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                    <div class="loader" name="loaderDiv" id="loaderDiv" hidden></div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-1 col-md-2 col-lg-3 text-center"></div>
+    </div>
+</div>
+
+@section _nav{
+    @Html.Partial("_Nav")
+}
+
+@section scripts{
+    <script>
+        $('#btnClienteUpload').click(function () {
+            $('#loaderDiv').show();
+            var formData = new FormData(document.getElementById('formClienteUpload'));
+            $.ajax({
+                url: '@Url.Action("UploadCliente")',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('#loaderDiv').hide();
+                    alert('Status: ' + data.Status + '\nClientes Inseridos: ' + data.Contador + '\nDuração: ' + data.Tempo);
+                },
+                error: function (data) {
+                    $('#loaderDiv').hide();
+                    alert('error');
+                }
+            });
+        });
+    </script>
+}

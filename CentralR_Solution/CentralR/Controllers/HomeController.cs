@@ -13,18 +13,18 @@ namespace CentralR.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult LogOff()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (Session["Logado"] != null)
+            {
+                Session.Remove("Logado");
+            }
+            if (Session["Administrador"] != null)
+            {
+                Session.Remove("Administrador");
+            }
+            return RedirectToAction("Index", "Login");
         }
     }
 }

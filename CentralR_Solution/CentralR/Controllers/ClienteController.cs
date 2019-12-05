@@ -18,16 +18,23 @@ namespace CentralR.Controllers
         // GET: Cliente
         public ActionResult Upload()
         {
-            return View();
+            if (Session["Logado"] != null)
+            {
+                if ((bool)Session["Logado"] == true)
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Login");
         }
 
         public JsonResult UploadCliente(FormCollection form)
         {
             string status = "";
             int contador = -1;
-            DateTime tempoInicio;
-            DateTime tempoFim;
-            TimeSpan tempoTotal = DateTime.Now.TimeOfDay;
+            DateTime tempoInicio = DateTime.Now;
+            DateTime tempoFim = DateTime.Now;
+            TimeSpan tempoTotal = tempoFim.Subtract(tempoInicio);
             HttpPostedFileBase file = Request.Files[0];
 
             if (file != null)
@@ -43,12 +50,12 @@ namespace CentralR.Controllers
                         tempoTotal = tempoFim.Subtract(tempoInicio);
                         status = "Sucesso";
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        throw;
+                        status = "Erro ao ler o arquivo\n" + e.StackTrace;
                     }
-                } else { status = "Arquivo muito grande"; }
-            } else { status = "Error"; }
+                }else { status = "Arquivo Inválido"; }
+            }else { status = "Arquivo Inválido"; }
 
             return Json(new
             {
@@ -161,7 +168,7 @@ namespace CentralR.Controllers
                                 else if (coluna == 2)
                                 {
                                     auxNomeCliente += conteudo[k] + " ";
-                                    if (int.TryParse(conteudo[k + 1], out int tryResult))
+                                    if (conteudo[k + 2].Contains("Dia(s)") || conteudo[k + 2].Contains("Mes(es)") || conteudo[k + 2].Contains("Ano(s)"))
                                     {
                                         cliente.Nome = auxNomeCliente.Trim();
                                         coluna = 3;
@@ -268,5 +275,6 @@ namespace CentralR.Controllers
             //retorna o numero de clientes adicionados
             return contador;
         }
+
     }
 }

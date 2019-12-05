@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    input{
+        display: initial !important;
+    }
+</style>
+
+<div class="divContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
+            <div class="col-xs-12 col-sm-10 col-md-10 text-center">
+                <div id="divPesquisa">
+                    <form id="formPesquisa" name="formPesquisa" class="form-horizontal">
+                        <div class="form-group">
+                            <h1>USUÁRIOS</h1>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="txtPesquisa" name="txtPesquisa" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div id="divTableResult"></div>
+            </div>
+            <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
+        </div>
+    </div>
+</div>
+
+
+@section _nav{
+    @Html.Partial("_Nav")
+}
+
+@section scripts{
+    <script>
+        function Editar(id) {
+            $.ajax({
+                url: '@Url.Action("SetaEditar")',
+                type: 'POST',
+                data: {id:id},
+                success: function (data) {
+                    var targetUrl = "/Usuario/Editar";
+                    window.location.href = targetUrl;
+                }, error: function (data) {
+                    console.log('error');
+                }
+            });
+        }
+
+        function Pesquisar() {
+            var form = $('#formPesquisa').serialize();
+            $.ajax({
+                url: '@Url.Action("Pesquisar")',
+                type: 'POST',
+                data: form,
+                success: function (data) {
+                    console.log('success');
+                    $('#divTableResult').html(data.ListaUsuarios);
+                }, error: function (data) {
+                    console.log('error');
+                }
+            });
+        }
+
+        $('#txtPesquisa').keyup(function () {
+            Pesquisar();
+        });
+
+        $(document).ready(function () {
+            Pesquisar();
+        });
+    </script>
+}
