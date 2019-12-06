@@ -37,37 +37,53 @@ namespace CentralR.Controllers
             {
                 ModelState.AddModelError("", "Os campos CPF e Senha são obrigatórios");
             }
+            else if (txtCpf.Length<14)
+            {
+                ModelState.AddModelError("", "CPF inválido");
+            }
+            else if (txtCpf.Contains("_"))
+            {
+                ModelState.AddModelError("", "CPF inválido");
+            }
             else
             {
                 Usuario usuario = new Usuario();
                 usuario = db.Usuario.FirstOrDefault(x=> x.CPF.Equals(txtCpf) && x.Senha.Equals(txtSenha));
                 if (usuario != null)
                 {
-                    Session["Logado"] = true;
-                    if (usuario.Acesso == true)
+                    if (usuario.Status_ == true)
                     {
-                        Session["Administrador"] = true;
-                    }
-                    if (cbxLembrar == true)
-                    {
-                        HttpCookie cookie = new HttpCookie("cLogin");
-                        cookie.Values.Add("CPF", txtCpf);
-                        cookie.Values.Add("Senha", txtSenha);
-                        cookie.Expires = DateTime.Now.AddHours(8);
-                        Response.AppendCookie(cookie);
-                    }
-                    else if (cbxLembrar == false)
-                    {
-                        if (Request.Cookies["cLogin"] != null)
+                        Session["Logado"] = true;
+                        if (usuario.Administrador == true)
                         {
-                            Response.Cookies["cLogin"].Expires = DateTime.Now.AddDays(-1);
+                            Session["Administrador"] = true;
                         }
+                        if (cbxLembrar == true)
+                        {
+                            HttpCookie cookie = new HttpCookie("cLogin");
+                            cookie.Values.Add("CPF", txtCpf);
+                            cookie.Values.Add("Senha", txtSenha);
+                            cookie.Expires = DateTime.Now.AddHours(8);
+                            Response.AppendCookie(cookie);
+                        }
+                        else if (cbxLembrar == false)
+                        {
+                            if (Request.Cookies["cLogin"] != null)
+                            {
+                                Response.Cookies["cLogin"].Expires = DateTime.Now.AddDays(-1);
+                            }
+                        }
+                        return RedirectToAction("Upload", "Cliente");
                     }
-                    return RedirectToAction("Upload", "Cliente");
+                    else
+                    {
+                        ModelState.AddModelError("", "Login Inativo");
+                        return View();
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "CPF ou senha inválidos");
+                    ModelState.AddModelError("", "CPF ou senha incorretos");
                 }
             }
             return View();

@@ -47,10 +47,10 @@
     </Key>
     <Property Name="ID_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CPF" Type="nvarchar" MaxLength="20" Nullable="false" />
-    <Property Name="Nome" Type="nvarchar(max)" />
-    <Property Name="Senha" Type="nvarchar(max)" />
-    <Property Name="Status_" Type="bit" />
-    <Property Name="Acesso" Type="bit" />
+    <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Senha" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status_" Type="bit" Nullable="false" />
+    <Property Name="Administrador" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'CentralR.dbo.ViewAgendamentoConsulta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->

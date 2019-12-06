@@ -130,9 +130,9 @@
     </Key>
     <Property Name="ID_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CPF" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Senha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Status_" Type="Boolean" />
-    <Property Name="Acesso" Type="Boolean" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Senha" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status_" Type="Boolean" Nullable="false" />
+    <Property Name="Administrador" Type="Boolean" Nullable="false" />
   </EntityType>
 </Schema>

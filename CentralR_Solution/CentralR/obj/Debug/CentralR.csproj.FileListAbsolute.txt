@@ -53,6 +53,7 @@ C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Common.Logging.Core.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Common.Logging.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EntityFramework.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EntityFramework.SqlServer.dll
+C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EPPlus.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\itextsharp.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Microsoft.Web.Infrastructure.dll
@@ -72,6 +73,7 @@ C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Common.Logging.Core.pdb
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Common.Logging.Core.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EntityFramework.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EntityFramework.SqlServer.xml
+C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EPPlus.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\itextsharp.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\System.Web.Helpers.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\System.Web.Mvc.xml
@@ -83,9 +85,7 @@ C:\Projetos\NTI\CentralR_Solution\CentralR\bin\System.Web.WebPages.Razor.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Newtonsoft.Json.xml
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Antlr3.Runtime.pdb
 C:\Projetos\NTI\CentralR_Solution\CentralR\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Projetos\NTI\CentralR_Solution\CentralR\obj\Debug\CentralR.csprojAssemblyReference.cache
 C:\Projetos\NTI\CentralR_Solution\CentralR\obj\Debug\CentralR.csproj.CopyComplete
 C:\Projetos\NTI\CentralR_Solution\CentralR\obj\Debug\CentralR.dll
 C:\Projetos\NTI\CentralR_Solution\CentralR\obj\Debug\CentralR.pdb
-C:\Projetos\NTI\CentralR_Solution\CentralR\obj\Debug\CentralR.csprojAssemblyReference.cache
-C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EPPlus.dll
-C:\Projetos\NTI\CentralR_Solution\CentralR\bin\EPPlus.xml

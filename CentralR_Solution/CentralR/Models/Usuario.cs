@@ -11,20 +11,62 @@ namespace CentralR.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class Usuario
     {
+        [DisplayName("ID")]
         public int ID_Usuario { get; set; }
+        [Required]
         public string CPF { get; set; }
+        [Required]
         public string Nome { get; set; }
+        [Required]
         public string Senha { get; set; }
-        public Nullable<bool> Status_ { get; set; }
-        public Nullable<bool> Acesso { get; set; }
-    }
+        [Required]
+        [DisplayName("Status")]
+        public bool Status_ { get; set; }
+        [Required]
+        public bool Administrador { get; set; }
 
-    public enum Status_
-    {
-        Ativado,
-        Desativado
+        public static IEnumerable<SelectListItem> dropDownStatusNovo = new List<SelectListItem>()
+        {
+            new SelectListItem() { Text="Ativo", Value="true", Selected=true},
+            new SelectListItem() { Text="Inativo", Value="false"}
+        };
+
+        public static IEnumerable<SelectListItem> dropDownAdministradorNovo = new List<SelectListItem>()
+        {
+            new SelectListItem() { Text="Sim", Value="true"},
+            new SelectListItem() { Text="Não", Value="false",Selected=true}
+        };
+
+        public List<SelectListItem> dropDownStatusEditar
+        {
+            get
+            {
+                List<SelectListItem> list = new List<SelectListItem>
+                {
+                    new SelectListItem() { Text="Ativo", Value="true", Selected = (Status_==true?true:false)},
+                    new SelectListItem() { Text="Inativo", Value="false", Selected = (Status_==false?true:false)}
+                };
+                return list;
+            }
+        }
+
+        public List<SelectListItem> dropDownAdministradorEditar
+        {
+            get
+            {
+                List<SelectListItem> list = new List<SelectListItem>
+                {
+                    new SelectListItem() { Text="Sim", Value="true", Selected = (Administrador==true?true:false)},
+                    new SelectListItem() { Text="Não", Value="false", Selected = (Administrador==false?true:false)}
+                };
+                return list;
+            }
+        }
     }
 }

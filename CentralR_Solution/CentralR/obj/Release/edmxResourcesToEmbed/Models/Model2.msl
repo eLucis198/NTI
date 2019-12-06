@@ -72,7 +72,7 @@
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="CentralRModel1.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
-          <ScalarProperty Name="Acesso" ColumnName="Acesso" />
+          <ScalarProperty Name="Administrador" ColumnName="Administrador" />
           <ScalarProperty Name="Status_" ColumnName="Status_" />
           <ScalarProperty Name="Senha" ColumnName="Senha" />
           <ScalarProperty Name="Nome" ColumnName="Nome" />

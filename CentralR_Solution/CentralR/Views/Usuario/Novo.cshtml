@@ -1,0 +1,65 @@
+﻿@model CentralR.Models.Usuario
+@{
+    ViewBag.Title = "Novo";
+}
+
+<div class="divContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
+            <div class="col-xs-12 col-sm-10 col-md-10 text-center">
+                <div id="divPesquisa">
+                    @using (Html.BeginForm("Novo", "Usuario", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="form-group">
+                            <h1>NOVO USUÁRIO</h1>
+                            @*@Html.ValidationSummary()*@
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.Nome)
+                            <br />
+                            @Html.LabelFor(x => x.Nome)
+                            @Html.TextBoxFor(x => x.Nome, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.CPF)
+                            <br />
+                            @Html.LabelFor(x => x.CPF)
+                            @Html.TextBoxFor(x => x.CPF, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.Senha)
+                            <br />
+                            @Html.LabelFor(x => x.Senha)
+                            @Html.TextBoxFor(x => x.Senha, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Status_)
+                            @Html.DropDownListFor(x => x.Status_, CentralR.Models.Usuario.dropDownStatusNovo, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Administrador)
+                            @Html.DropDownListFor(x => x.Administrador, CentralR.Models.Usuario.dropDownAdministradorNovo, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="SALVAR" />
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
+        </div>
+    </div>
+</div>
+
+@section _nav{
+    @Html.Partial("_Nav")
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#CPF').inputmask("999.999.999-99");
+        });
+    </script>
+}

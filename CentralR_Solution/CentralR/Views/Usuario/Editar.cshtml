@@ -5,42 +5,53 @@
     ViewBag.Title = "Editar";
 }
 
-
-
 <div class="divContent">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
             <div class="col-xs-12 col-sm-10 col-md-10 text-center">
                 <div id="divPesquisa">
-                    <form id="formPesquisa" name="formPesquisa" class="form-horizontal">
+                    @using (Html.BeginForm("Editar", "Usuario", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
                         <div class="form-group">
                             <h1>EDITAR USUÁRIO</h1>
                         </div>
                         <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.ID_Usuario)
+                            <br />
+                            @Html.LabelFor(x => x.ID_Usuario)
+                            @Html.TextBoxFor(x => x.ID_Usuario, new { @class = "form-control", @readonly="readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.Nome)
+                            <br />
                             @Html.LabelFor(x => x.Nome)
-                            @Html.TextBoxFor(x => x.Nome, new { @class="form-control" })
+                            @Html.TextBoxFor(x => x.Nome, new { @class = "form-control" })
                         </div>
                         <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.CPF)
+                            <br />
                             @Html.LabelFor(x => x.CPF)
-                            @Html.TextBoxFor(x => x.CPF, new { @class="form-control" })
+                            @Html.TextBoxFor(x => x.CPF, new { @class = "form-control" })
                         </div>
                         <div class="form-group">
+                            @Html.ValidationMessageFor(model => model.Senha)
+                            <br />
                             @Html.LabelFor(x => x.Senha)
-                            @Html.TextBoxFor(x => x.Senha, new { @class="form-control" })
+                            @Html.TextBoxFor(x => x.Senha, new { @class = "form-control" })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.Status_)
-                            @Html.TextBoxFor(x=> x.Status_, new { @class="form-control" })
+                            @Html.DropDownListFor(x => x.Status_, Model.dropDownStatusEditar, new { @class = "form-control" })
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(x => x.Acesso)
-                            @Html.TextBoxFor(x => x.Acesso, new { @class="form-control" })
+                            @Html.LabelFor(x => x.Administrador)
+                            @Html.DropDownListFor(x => x.Administrador, Model.dropDownAdministradorEditar, new { @class = "form-control" })
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-primary" value="SALVAR"/>
+                            <input type="submit" class="btn btn-primary" value="SALVAR" />
                         </div>
-                    </form>
+                    }
                 </div>
             </div>
             <div class="col-xs-12 col-sm-1 col-md-1 text-center"></div>
